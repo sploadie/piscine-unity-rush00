@@ -6,6 +6,7 @@ public class Ammo : MonoBehaviour {
 
 	public float speed = 10.0f;
 	public float timeOut = 5.0f;
+	public bool linger = true;
 
 	public Vector3 direction { get; private set; }
 
@@ -29,7 +30,17 @@ public class Ammo : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D coll) {
 		gameUnit victim = coll.gameObject.GetComponent<gameUnit>();
 		if (victim) {
+			victim.GetComponent<Rigidbody2D> ().drag = 2;
 			victim.dead = true;
+			GameObject.Destroy (this.gameObject);
+		} else {
+			if (linger) {
+				GetComponent<Rigidbody2D> ().mass = 0.1f;
+				GetComponent<Rigidbody2D> ().drag = 2;
+				Destroy (this);
+			} else {
+				GameObject.Destroy (this.gameObject);
+			}
 		}
 	}
 }

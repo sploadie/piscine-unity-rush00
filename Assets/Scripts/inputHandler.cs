@@ -10,12 +10,9 @@ public class inputHandler : MonoBehaviour {
 	public Texture2D playCursor;
 	public Vector2   playCursor_center = new Vector2 (6, 6);
 	
-	public bool pause { get; private set; }
-
 	void Awake () {
 		if (!instance)
 			instance = this;
-		pause = false;
 	}
 
 	// Use this for initialization
@@ -26,14 +23,10 @@ public class inputHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
-			if (pause) {
-				pause = false;
+			if (gameManager.instance.isPaused) {
 				gameManager.instance.pause(false);
-				Cursor.SetCursor(playCursor, playCursor_center, CursorMode.Auto);
 			} else {
-				pause = true;
 				gameManager.instance.pause(true);
-				Cursor.SetCursor(menuCursor, menuCursor_center, CursorMode.Auto);
 			}
 		}
 	}

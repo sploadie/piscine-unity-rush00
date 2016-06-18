@@ -11,7 +11,9 @@ public class gameUnit : MonoBehaviour {
 	public Weapon weapon { get; private set; }
 
 	public Rigidbody2D body { get; private set; }
-	
+
+	private float dying = 0;
+
 	void Awake () {
 		body = GetComponent<Rigidbody2D> ();
 		weapon = null;
@@ -24,9 +26,17 @@ public class gameUnit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+//		if (dead && !dying) {
+		if (dead) {
+			if (dying == 0) {
+				drop ();
+				Destroy (this.gameObject, 1.0f);
+			}
+			dying += Time.deltaTime;
+			GetComponent<SpriteRenderer> ().color = Color.Lerp(Color.white, new Color(1,0,0,0), dying);
+		}
 	}
-	
+
 	public void equip (Weapon wpn) {
 		if (!weapon) {
 			weapon = wpn.equip(this);

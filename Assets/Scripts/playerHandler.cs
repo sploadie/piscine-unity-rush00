@@ -19,7 +19,8 @@ public class playerHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!inputHandler.instance.pause) {
+
+		if (!gameManager.instance.isPaused) {
 			inputHandler.cameraTo(character.transform.position);
 			character.transform.rotation = Quaternion.LookRotation(Vector3.forward, (Vector2)character.transform.position - inputHandler.mousePoint());
 			character.body.velocity = new Vector2 (Input.GetAxis ("Horizontal") * character.speed, Input.GetAxis ("Vertical") * character.speed);
@@ -36,7 +37,7 @@ public class playerHandler : MonoBehaviour {
 						if (hit.collider && hit.collider.tag == "weapon") {
 							Debug.Log ("Found "+hit.collider.gameObject);
 							Weapon weapon = hit.collider.gameObject.GetComponent<Weapon> ();
-							Debug.Log ("Weapon: "+weapon);
+							Debug.Log ("Weapon: " + weapon);
 							if (weapon && !weapon.held) {
 								Debug.Log ("Equipping Weapon");
 								character.equip(weapon);
@@ -45,15 +46,20 @@ public class playerHandler : MonoBehaviour {
 						}
 					}
 				}
-			} else if (Input.GetMouseButton (0)) {
+			} else if (Input.GetMouseButton (0) && character.weapon && character.weapon.auto) {
 				characterFire();
 			}
 		}
+		character.body.angularVelocity = 0.0f;
 	}
 
 	private void characterFire() {
 		if (character.weapon) {
-			character.weapon.fire (true);
+			character.weapon.fire (true, inputHandler.mousePoint());
 		}
+	}
+
+	public static Vector3 position() {
+		return instance.character.transform.position;
 	}
 }
