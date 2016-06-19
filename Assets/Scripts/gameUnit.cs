@@ -11,11 +11,15 @@ public class gameUnit : MonoBehaviour {
 	public Weapon weapon { get; private set; }
 
 	public Rigidbody2D body { get; private set; }
+	public CircleCollider2D collider { get; private set; }
+	public SpriteRenderer sprite { get; private set; }
 
 	private float dying = 0;
 
 	void Awake () {
 		body = GetComponent<Rigidbody2D> ();
+		collider = GetComponent<CircleCollider2D> ();
+		sprite = GetComponent<SpriteRenderer> ();
 		weapon = null;
 	}
 
@@ -33,7 +37,7 @@ public class gameUnit : MonoBehaviour {
 				Destroy (this.gameObject, 1.0f);
 			}
 			dying += Time.deltaTime;
-			GetComponent<SpriteRenderer> ().color = Color.Lerp(Color.white, new Color(1,0,0,0), dying);
+			sprite.color = Color.Lerp(Color.white, new Color(1,0,0,0), dying);
 		}
 	}
 

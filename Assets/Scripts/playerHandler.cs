@@ -56,6 +56,8 @@ public class playerHandler : MonoBehaviour {
 	private void characterFire() {
 		if (character.weapon) {
 			character.weapon.fire (true, inputHandler.mousePoint());
+			if (!character.weapon.melee)
+				gameManager.instance.alertEnemies(character);
 		}
 	}
 

@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour {
 	public float fireRate = 0.2f;
 	public bool auto = false;
 	public bool melee = false;
+	public float alertDistance = 5f;
 
 	private float lastFired;
 

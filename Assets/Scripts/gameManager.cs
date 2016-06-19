@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //[RequireComponent(typeof(Image))]
 public class gameManager : MonoBehaviour {
@@ -12,10 +13,13 @@ public class gameManager : MonoBehaviour {
 	public Weapon[] weapon_list;
 	public Sprite[] enemy_list;
 
+	public List<Enemy> enemies;
+
 	void Awake () {
 		if (!instance)
 			instance = this;
 		isPaused = false;
+		enemies = new List<Enemy> ();
 	}
 
 	// Use this for initialization
@@ -57,5 +61,12 @@ public class gameManager : MonoBehaviour {
 		if (enemy_list.Length > 0)
 			return enemy_list[Random.Range (0, enemy_list.Length)];
 		return null;
+	}
+
+	// RoxTeddy
+	public void alertEnemies(gameUnit player) {
+		foreach (Enemy e in enemies) {
+			e.alert (player);
+		}
 	}
 }
