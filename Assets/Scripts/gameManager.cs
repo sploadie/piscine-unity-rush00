@@ -14,12 +14,14 @@ public class gameManager : MonoBehaviour {
 	public Sprite[] enemy_list;
 
 	public List<Enemy> enemies;
+	public List<Waypoint> waypoints;
 
 	void Awake () {
 		if (!instance)
 			instance = this;
 		isPaused = false;
 		enemies = new List<Enemy> ();
+		waypoints = new List<Waypoint> ();
 	}
 
 	// Use this for initialization
