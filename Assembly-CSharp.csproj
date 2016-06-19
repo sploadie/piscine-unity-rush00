@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\gameUnit.cs" />
      <Compile Include="Assets\Scripts\inputHandler.cs" />
      <Compile Include="Assets\Scripts\playerHandler.cs" />
+     <Compile Include="Assets\Scripts\unitSounds.cs" />
      <None Include="Assets\Fonts\friday13\Font License.txt" />
      <None Include="Assets\Fonts\d3digitalism\Read Me.txt" />
      <None Include="Assets\Fonts\shoguns_clan\README.txt" />
