@@ -8,6 +8,8 @@ public class gameManager : MonoBehaviour {
 	public static gameManager instance { get; private set; }
 	private float tmpTimeScale = 1;
 
+	public bool debug = true;
+
 	public bool isPaused { get; private set; }
 
 	public Weapon[] weapon_list;

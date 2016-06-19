@@ -72,17 +72,17 @@ public class Enemy : MonoBehaviour {
 			searchForPlayer();
 			// Do state
 			if (status == Status.aggro) {
-				unit.sprite.color = new Color(0.6f,1f,0.6f);
+				if (gameManager.instance.debug) unit.sprite.color = new Color(0.6f,1f,0.6f);
 				if (unit.weapon.melee)
 					unit.body.velocity = ((Vector2)playerHandler.position() - (Vector2)transform.position).normalized * unit.speed;
 				unit.transform.rotation = Quaternion.LookRotation (Vector3.forward, (Vector2)unit.transform.position - (Vector2)playerHandler.position ());
 				unit.weapon.fire (false, (Vector2)playerHandler.position ());
 			} else if (alertPath != null) {
-				unit.sprite.color = new Color(0.6f,0.6f,1f);
+				if (gameManager.instance.debug) unit.sprite.color = new Color(0.6f,0.6f,1f);
 				unit.transform.rotation = Quaternion.LookRotation (Vector3.forward, (Vector2)unit.transform.position - alertPosition);
 				unit.body.velocity = (alertPosition - (Vector2)transform.position).normalized * unit.speed;
 			} else {
-				unit.sprite.color = Color.white;
+				if (gameManager.instance.debug) unit.sprite.color = Color.white;
 				unit.body.velocity = Vector2.zero;
 			}
 			unit.body.angularVelocity = 0f;

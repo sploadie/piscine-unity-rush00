@@ -38,11 +38,9 @@ public class Waypoint : MonoBehaviour {
 	}
 	
 	public List<Vector2> getPathFrom (Waypoint start, bool fast, List<Waypoint> prev) {
-		if (prev.Contains (this) || prev.Count > 10) {
-//			Debug.Log (this + " IN PREV");
+		if (prev.Contains (this) || (!fast && prev.Count > 10)) {
 			return null;
 		}
-//		Debug.Log (this + " NOT IN PREV");
 		prev = new List<Waypoint> (prev);
 		prev.Add (this);
 		List<Vector2> path = null;

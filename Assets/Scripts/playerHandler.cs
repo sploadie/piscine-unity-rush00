@@ -7,6 +7,8 @@ public class playerHandler : MonoBehaviour {
 
 	public gameUnit character;
 
+	private float eHeldTime = 0;
+
 	void Awake () {
 		if (!instance)
 			instance = this;
@@ -21,7 +23,16 @@ public class playerHandler : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!gameManager.instance.isPaused && !character.dead) {
-			inputHandler.cameraTo(character.transform.position);
+			Vector3 cameraPosition = character.transform.position;
+			if (Input.GetKeyDown(KeyCode.E)) {
+				eHeldTime = 0f;
+			}
+			if (Input.GetKey (KeyCode.E)) {
+				cameraPosition = Vector3.Lerp(character.transform.position, character.transform.position + new Vector3 ((Input.mousePosition.x - (Screen.width * 0.5f)) / Screen.width, (Input.mousePosition.y - (Screen.height * 0.5f)) / Screen.height, character.transform.position.z) * 5f, eHeldTime);
+//				cameraPosition += new Vector3 ((Input.mousePosition.x - (Screen.width * 0.5f)) / Screen.width, (Input.mousePosition.y - (Screen.height * 0.5f)) / Screen.height, 0f) * 5f;
+				eHeldTime += Time.deltaTime * 3;
+			}
+			inputHandler.cameraTo(cameraPosition);
 			character.transform.rotation = Quaternion.LookRotation(Vector3.forward, (Vector2)character.transform.position - inputHandler.mousePoint());
 			character.body.velocity = new Vector2 (Input.GetAxis ("Horizontal") * character.speed, Input.GetAxis ("Vertical") * character.speed);
 			if (Input.GetMouseButtonDown (0)) {
