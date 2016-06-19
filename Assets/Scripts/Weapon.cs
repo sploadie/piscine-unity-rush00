@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour {
 					Quaternion.LookRotation (Vector3.forward, (Vector2)transform.position - inputHandler.mousePoint ()) * Quaternion.Euler (0, 0, -90),
 					0.1f
 				);
-			} else if (held && held.GetComponent<Enemy> ().aggro) {
+			} else if (held && held.GetComponent<Enemy> ().status == Enemy.Status.aggro) {
 				transform.rotation = Quaternion.Slerp (
 					transform.rotation,
 					Quaternion.LookRotation (Vector3.forward, (Vector2)transform.position - (Vector2)playerHandler.position()) * Quaternion.Euler (0, 0, -90),
@@ -47,10 +47,13 @@ public class Weapon : MonoBehaviour {
 		if (ammo && ammo_count > 0 && lastFired >= fireRate) {
 			lastFired = 0.0f;
 			if (isPlayer) {
-				if (!melee)
+				if (!melee) {
 					ammo_count -= 1;
-				if (ammo_count == 0)
+					gameManager.instance.alertEnemies(this);
+				}
+				if (ammo_count == 0) {
 					GetComponent<SpriteRenderer> ().color = Color.red;
+				}
 				ammo.gameObject.layer = LayerMask.NameToLayer("Player Ammo");
 			} else {
 				ammo.gameObject.layer = LayerMask.NameToLayer("Enemy Ammo");

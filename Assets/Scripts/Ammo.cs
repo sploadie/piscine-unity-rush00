@@ -31,12 +31,13 @@ public class Ammo : MonoBehaviour {
 		gameUnit victim = coll.gameObject.GetComponent<gameUnit>();
 		if (victim) {
 			victim.GetComponent<Rigidbody2D> ().drag = 2;
-			victim.dead = true;
+			victim.Death.Invoke();
 			GameObject.Destroy (this.gameObject);
 		} else {
 			if (linger) {
 				GetComponent<Rigidbody2D> ().mass = 0.1f;
 				GetComponent<Rigidbody2D> ().drag = 2;
+				Destroy (this.gameObject, timeOut);
 				Destroy (this);
 			} else {
 				GameObject.Destroy (this.gameObject);
