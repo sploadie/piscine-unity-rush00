@@ -33,10 +33,13 @@ public class unitSounds : MonoBehaviour {
 			Debug.Log ("Key already in sounds: "+name);
 		}
 	}
-	
+
+	void Awake () {
+		sounds = new Dictionary<string, AudioSource[]> ();
+	}
+
 	// Use this for initialization
 	void Start () {
-		sounds = new Dictionary<string, AudioSource[]> ();
 		AddClips ("Fire", ref clipsFire);
 		AddClips ("Empty", ref clipsEmpty);
 		AddClips ("Selected", ref clipsSelected);

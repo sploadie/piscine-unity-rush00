@@ -5,6 +5,8 @@ using System.Collections.Generic;
 [RequireComponent(typeof(unitSounds))]
 public class gameManager : MonoBehaviour {
 
+	public GameMenu gameMenu;
+
 	public static gameManager instance { get; private set; }
 	private float tmpTimeScale = 1;
 	public bool debug = true;
@@ -17,7 +19,7 @@ public class gameManager : MonoBehaviour {
 	public List<Enemy> enemies;
 	public List<Waypoint> waypoints;
 
-	private bool gameIsOver = false;
+	public bool gameIsOver = false;
 
 	void Awake () {
 		if (!instance)
@@ -33,22 +35,18 @@ public class gameManager : MonoBehaviour {
 		Time.timeScale = 1;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-	
 	// Pause
 	public void pause(bool paused = true) {
 		if (gameIsOver)
 			return;
 		isPaused = paused;
 		if (paused == true) {
+			gameMenu.gameObject.SetActive(true);
 			tmpTimeScale = Time.timeScale;
 			Time.timeScale = 0;
 			Cursor.SetCursor(inputHandler.instance.menuCursor, inputHandler.instance.menuCursor_center, CursorMode.Auto);
 		} else {
+			gameMenu.gameObject.SetActive(false);
 			Time.timeScale = tmpTimeScale;
 			Cursor.SetCursor(inputHandler.instance.playCursor, inputHandler.instance.playCursor_center, CursorMode.Auto);
 		}
