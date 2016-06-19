@@ -14,6 +14,7 @@ public class RepeatingSprite : MonoBehaviour {
 		GameObject childPrefab = new GameObject();
 		
 		SpriteRenderer childSprite = childPrefab.AddComponent<SpriteRenderer>();
+		childSprite.sortingLayerName = sprite.sortingLayerName;
 		childPrefab.transform.position = transform.position;
 		childSprite.sprite = sprite.sprite;
 		
