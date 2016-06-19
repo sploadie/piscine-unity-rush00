@@ -3,23 +3,28 @@ using System.Collections;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(unitSounds))]
 public class Weapon : MonoBehaviour {
 
 	public Ammo ammo;
 	public int ammo_count = 20;
+	public int ammoCount { get; private set;}
 	public float fireRate = 0.2f;
 	public bool auto = false;
 	public bool melee = false;
 	public float alertDistance = 5f;
 
 	private float lastFired;
+	private unitSounds sounds;
 
 	public gameUnit held { get; private set; }
 	public Vector3 held_position = new Vector3 (-0.235f, 0, 0);
 	public Quaternion held_rotation = Quaternion.Euler (0, 0, -90);
 
 	void Awake () {
+		ammoCount = ammo_count;
 		lastFired = fireRate;
+		sounds = GetComponent<unitSounds> ();
 		held = null;
 	}
 	
@@ -44,14 +49,15 @@ public class Weapon : MonoBehaviour {
 	}
 
 	public void fire (bool isPlayer, Vector2 target) {
-		if (ammo && ammo_count > 0 && lastFired >= fireRate) {
+		if (ammo && ammoCount > 0 && lastFired >= fireRate) {
+			sounds.Play("Fire");
 			lastFired = 0.0f;
 			if (isPlayer) {
 				if (!melee) {
-					ammo_count -= 1;
+					ammoCount -= 1;
 					gameManager.instance.alertEnemies(this);
 				}
-				if (ammo_count == 0) {
+				if (ammoCount == 0) {
 					GetComponent<SpriteRenderer> ().color = Color.red;
 				}
 				ammo.gameObject.layer = LayerMask.NameToLayer("Player Ammo");
@@ -60,6 +66,9 @@ public class Weapon : MonoBehaviour {
 			}
 			Ammo shell = GameObject.Instantiate (ammo, transform.position, transform.rotation) as Ammo;
 			shell.setDirection((target - (Vector2)transform.position).normalized);
+		} else if (ammoCount < 1 && lastFired >= fireRate) {
+			lastFired = 0.0f;
+			gameManager.instance.sounds.Play("Empty");
 		}
 	}
 

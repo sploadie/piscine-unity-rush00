@@ -42,15 +42,20 @@ public class gameUnit : MonoBehaviour {
 	}
 
 	private void isDead() {
-		dead = true;
-		drop ();
-		deadTime -= Time.deltaTime;
-		Destroy (this.gameObject, 1.0f);
+		if (!dead) {
+			dead = true;
+			drop ();
+			gameManager.instance.sounds.Play ("Dead");
+			deadTime -= Time.deltaTime;
+			Destroy (this.gameObject, 1.0f);
+		}
 	}
 
 	public void equip (Weapon wpn) {
 		if (!weapon) {
 			weapon = wpn.equip(this);
+			if (gameManager.instance.sounds)
+				gameManager.instance.sounds.Play("Selected");
 		} else {
 			Debug.Log ("Unit "+this+" not holding a weapon!");
 		}

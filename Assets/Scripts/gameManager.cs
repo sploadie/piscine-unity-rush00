@@ -2,16 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//[RequireComponent(typeof(Image))]
+[RequireComponent(typeof(unitSounds))]
 public class gameManager : MonoBehaviour {
 
 	public static gameManager instance { get; private set; }
 	private float tmpTimeScale = 1;
-
 	public bool debug = true;
-
 	public bool isPaused { get; private set; }
 
+	public unitSounds sounds;
 	public Weapon[] weapon_list;
 	public Sprite[] enemy_list;
 
@@ -24,6 +23,7 @@ public class gameManager : MonoBehaviour {
 		if (!instance)
 			instance = this;
 		isPaused = false;
+		sounds = GetComponent<unitSounds> ();
 		enemies = new List<Enemy> ();
 		waypoints = new List<Waypoint> ();
 	}
@@ -55,6 +55,7 @@ public class gameManager : MonoBehaviour {
 	}
 
 	public void gameOver() {
+		sounds.Play("Lose");
 		Debug.Log ("GAME OVER");
 		pause (true);
 		gameIsOver = true;

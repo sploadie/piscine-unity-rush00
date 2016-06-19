@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\RepeatingSprite.cs" />
      <Compile Include="Assets\Scripts\Waypoint.cs" />
      <Compile Include="Assets\Scripts\Weapon.cs" />
+     <Compile Include="Assets\Scripts\ammoBar.cs" />
      <Compile Include="Assets\Scripts\gameManager.cs" />
      <Compile Include="Assets\Scripts\gameUnit.cs" />
      <Compile Include="Assets\Scripts\inputHandler.cs" />

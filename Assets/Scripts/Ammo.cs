@@ -7,6 +7,8 @@ public class Ammo : MonoBehaviour {
 	public float speed = 10.0f;
 	public float timeOut = 5.0f;
 	public bool linger = true;
+	public bool overwriteLayer = false;
+	public string overwriteLayerString = null;
 
 	public Vector3 direction { get; private set; }
 
@@ -15,6 +17,16 @@ public class Ammo : MonoBehaviour {
 	}
 	
 	void Update () {
+		if (overwriteLayer && overwriteLayerString != null) {
+			string name = LayerMask.LayerToName(gameObject.layer);
+			if (name == "Player Ammo") {
+				gameObject.layer = LayerMask.NameToLayer ("Player " + overwriteLayerString);
+				overwriteLayerString = null;
+			} else if (name == "Enemy Ammo") {
+				gameObject.layer = LayerMask.NameToLayer ("Enemy " + overwriteLayerString);
+				overwriteLayerString = null;
+			}
+		}
 		timeOut -= Time.deltaTime;
 		if (timeOut < 0)
 			GameObject.Destroy (this.gameObject);

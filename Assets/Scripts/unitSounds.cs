@@ -5,7 +5,10 @@ using System.Collections.Generic;
 public class unitSounds : MonoBehaviour {
 	
 	public AudioClip[] clipsFire;
+	public AudioClip[] clipsEmpty;
 	public AudioClip[] clipsSelected;
+	public AudioClip[] clipsWin;
+	public AudioClip[] clipsLose;
 	public AudioClip[] clipsDead;
 	
 	private Dictionary<string, AudioSource[]> sounds;
@@ -35,7 +38,10 @@ public class unitSounds : MonoBehaviour {
 	void Start () {
 		sounds = new Dictionary<string, AudioSource[]> ();
 		AddClips ("Fire", ref clipsFire);
+		AddClips ("Empty", ref clipsEmpty);
 		AddClips ("Selected", ref clipsSelected);
+		AddClips ("Win", ref clipsWin);
+		AddClips ("Lose", ref clipsLose);
 		AddClips ("Dead", ref clipsDead);
 	}
 	
